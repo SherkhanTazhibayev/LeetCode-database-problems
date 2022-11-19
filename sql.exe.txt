@@ -1,0 +1,13 @@
+select sell.s1Name as stock_name,
+       sell.s1Price - buy.s2Price as capital_gain_loss 
+  from (select s1.stock_name as s1Name,
+               sum(s1.price) as s1Price
+          from Stocks s1
+         where s1.operation = 'Sell'
+         group by s1.stock_name) sell,
+        (select s2.stock_name as s2Name,
+                sum(s2.price) as s2Price
+           from Stocks s2
+          where s2.operation = 'Buy'
+          group by s2.stock_name) buy
+ where sell.s1Name = buy.s2Name
