@@ -1,0 +1,6 @@
+select name, 
+       sum(amount) as balance
+  from transactions, users
+ where transactions.account = users.account
+ group by users.account
+having balance > 10000;
